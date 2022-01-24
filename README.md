@@ -1,0 +1,1 @@
+True_or_false: This is an entertainment web app where author posts short story and the hidden answer is it a true story or false, other users try to guess, after some time the author's answer is revealed and users get the points or not.
