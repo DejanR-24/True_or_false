@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'nav.html' %}
+    <div id="container1"><a href="/stories/" class="btn btn-primary col-sm">Vrati se na objave</a></div>
+    {% for comment in comments %}
+
+        <div id="container">
+        <div class="d-flex justify-content-end"><p>{{comment.author}}</p></div>
+        <div class="d-flex justify-content-center"><p>{{comment.text}}</p></div>
+        <div class="row">
+            <div class="col-sm row" style="text-align: center;justify-content: center;"><p class="col-sm">Rezultat:</p><a href="#" class="btn btn-primary col-sm">{{comment.result}}</a></div>
+        </div>
+        </div>
+
+    {% endfor %}
+    <div id="container2">
+    <form action="./" method='POST'>
+        {% csrf_token %} 
+        {{form.as_p}}
+        <input type="submit" value="Save">
+    </form>
+    </div>
+{% endblock %}
