@@ -9,12 +9,15 @@
         <div class="row d-flex justify-content-center">
             <div class="col-sm-4 row" style="text-align: center;justify-content: center;"><a href="#" class="btn btn-primary col-sm true_btn">True</a><p class="col-sm">{{story.t}}</p></div>
             <div class="col-sm-4 row" style="text-align: center;justify-content: center;"><a href="#" class="btn btn-secondary col-sm false_btn">False</a><p class="col-sm">{{story.f}}</p></div>
-            <div class="col-sm-4" style="text-align: center;"><a href="/stories/{{forloop.counter}}" class="btn" style="color: rgb(248, 207, 207);">Komentari</a></div>
+            <div class="col-sm-4" style="text-align: center;"><a href="/stories/{{forloop.counter}}" class="btn" style="color: rgb(248, 207, 207);">Comments</a></div>
         </div>
         </div>
     {% empty %}    
-    <div id="container">
-        <div class="d-flex justify-content-end"><p>There are no stories yet.</p></div>
-    </div>
+        <div id="container2">
+            <div class="d-flex justify-content-center"><p>There are no stories yet.</p></div>
+        </div>
     {% endfor %}
+
+    {% include 'story/pagination_links.html' %}
+
 {% endblock %}

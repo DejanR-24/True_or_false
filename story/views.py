@@ -1,16 +1,23 @@
-
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
-from django.views.generic import View
+from django.views.generic import View,ListView
 from .models import Story,Comment
 from .forms import StoryForm,CommentForm
 
 
-class Home(View):
-    def get(self,request):
-        all_stories =  Story.objects.all() 
-        return render(request, 'story/stories.html',{'stories':all_stories})
+#class Home(View):
+#    def get(self,request):
+ #       all_stories =  Story.objects.all() 
+  #      return render(request, 'story/stories.html',{'stories':all_stories})
+
+class Home(ListView):
+    model = Story
+    context_object_name = 'stories'
+    queryset = Story.objects.all()
+    template_name = 'story/stories.html'
+    ordering = '-id'
+    paginate_by = '10'
 
 class StoryComments(View):
     def get(self,request,story_ID):
