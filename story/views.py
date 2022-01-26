@@ -16,12 +16,7 @@ def stories(request):
 def story_comments(request,story_ID):
     comments = Comment.objects.filter(story_id=story_ID)   #story=story.objects.get(id=story_ID)) #SELECT * FROM KOMENTARI WHERE OBJAVE_ID=
     story = Story.objects.get(id=story_ID)
-    username = request.user.username
-    initial_data ={
-        'story': story_ID,
-        'author': username,
-    }
-    form=CommentForm(request.POST or None,initial=initial_data)
+    form=CommentForm(request.POST or None)
     if form.is_valid():
         form.save()
     return render(request, 'story/comments.html',{'story':story,'comments':comments, 'form':form})
