@@ -17,7 +17,7 @@ class Story(models.Model):
 
 class Comment(models.Model):
     text=CharField(max_length=550,unique=True,default='')
-    result=IntegerField(default=0)
+    likes=IntegerField(default=0)
     story = models.ForeignKey(Story,on_delete=models.CASCADE) #       objava = models.ForeignKey("Objava",on_delete=models.DO_NOTHING) 
     author=ForeignKey(User, to_field='username',on_delete=models.CASCADE,default="")
-    #author=ForeignKey(User,on_delete=models.DO_NOTHING,default="") uzima samo user_id
+    #author=ForeignKey(User,on_delete=models.DO_NOTHING,default="") uzima samo user_ids

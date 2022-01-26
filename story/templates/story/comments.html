@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'nav.html' %}
-    <div id="container"><a href="/stories/" class="btn btn-primary col-sm">Vrati se na objave</a></div>
+    <div id="container"><a href="/stories/" class="btn btn-primary col-sm">Go back</a></div>
 
     <div id="container1">
         <div class="d-flex justify-content-end"><p>{{story.author}}</p></div>
@@ -9,7 +9,6 @@
         <div class="row d-flex justify-content-center">
             <div class="col-sm-4 row" style="text-align: center;justify-content: center;"><a href="#" class="btn btn-primary col-sm true_btn">True</a><p class="col-sm">{{story.t}}</p></div>
             <div class="col-sm-4 row" style="text-align: center;justify-content: center;"><a href="#" class="btn btn-secondary col-sm false_btn">False</a><p class="col-sm">{{story.f}}</p></div>
-            <div class="col-sm-4" style="text-align: center;"><a href="/stories/{{forloop.counter}}" class="btn" style="color: rgb(248, 207, 207);">Komentari</a></div>
         </div>
         </div>
 
@@ -19,7 +18,13 @@
         <div class="d-flex justify-content-end"><p>{{comment.author}}</p></div>
         <div class="d-flex justify-content-center"><p>{{comment.text}}</p></div>
         <div class="row">
-            <div class="col-sm row" style="text-align: center;justify-content: center;"><p class="col-sm">Rezultat:</p><a href="#" class="btn btn-primary col-sm">{{comment.result}}</a></div>
+            <div class="col-sm row" style="text-align: center;justify-content: center;">
+                <p class="col-sm-3">Likes: {{ comment.likes }}</p>
+                <div class="col-sm-1"></div>
+                <a href="#" class="btn btn-primary col-sm-3">Like</a>
+                <div class="col-sm-1"></div>
+                <a href="#" class="btn btn-primary col-sm-3">Dislike</a>
+            </div>
         </div>
         </div>
 
@@ -30,12 +35,12 @@
         <form action="./" method="POST">
             {% csrf_token %}
             <div class="form-group">
-                <label for="id_text">Komentar:</label>
+                <label for="id_text">Comment:</label>
                 <textarea name="text" class="form-control" id="id_text" rows="4" maxlength="550" required=""></textarea>
               </div>
               <div class="col-sm">
-                <input type='hidden' value='{{ user.get_username}}' name='ans' id="id_author">
-                <input type='hidden' value='0' name='ans' id="id_result">
+                <input type='hidden' value='{{ user.get_username}}' name='author' id="id_author">
+                <input type='hidden' value='{{ story.id }}' name='story' id="id_story_id">
                 <p class="col-sm" style="margin-left: 50%;">{{ user.get_username}}</p>
               </div>
               <div class="col-auto my-2">

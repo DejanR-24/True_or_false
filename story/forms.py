@@ -18,3 +18,4 @@ class CommentForm(forms.ModelForm):
             'author',
             'story'
         ]
+
