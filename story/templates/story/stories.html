@@ -12,6 +12,9 @@
             <div class="col-sm-4" style="text-align: center;"><a href="/stories/{{forloop.counter}}" class="btn" style="color: rgb(248, 207, 207);">Komentari</a></div>
         </div>
         </div>
-        
+    {% empty %}    
+    <div id="container">
+        <div class="d-flex justify-content-end"><p>There are no stories yet.</p></div>
+    </div>
     {% endfor %}
 {% endblock %}
