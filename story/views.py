@@ -2,8 +2,28 @@
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
+from django.views.generic import View
 from .models import Story,Comment
 from .forms import StoryForm,CommentForm
+
+class Home(View):
+    def get(self,request):
+        all_stories =  Story.objects.all() 
+        return render(request, 'story/stories.html',{'stories':all_stories})
+
+class StoryComments(View):
+    def get(self,request,story_ID):
+        story = Story.objects.get(id=story_ID)
+        comments = Comment.objects.filter(story_id=story_ID)
+        username = request.user.username
+        initial_data ={
+        'author': username,
+        }
+        form=CommentForm(request.POST or None,initial=initial_data)
+        if form.is_valid():
+            form.save()
+        return render(request, 'story/comments.html',{'story':story,'comments':comments, 'form':form})
+
 
 def stories(request):
     all_stories = Story.objects.all() #SELECT * FROM OBJAVE
@@ -48,3 +68,11 @@ def add_story(request):
         author = request.user.username
         story.objects.create(text = text, ans = ans, author = author).save()
         '''
+
+class AjaxHandlerView(View):
+    def get(self,request):
+        text = request.GET.get("true_button")
+        print()
+        print(text)
+        print()
+        return render(request, 'story/stories.html')

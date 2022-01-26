@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,10 +43,21 @@
         border: 2px solid rgb(86, 109, 238);
         border-radius: 5px;
     }
+    #container3{
+        width: 70%;
+        background-color: rgba(36, 120, 247, 0.5); 
+        color: honeydew;
+        margin-left: auto;
+        margin-right: auto;
+        border: 2px solid rgb(86, 109, 238);
+        border-radius: 5px;
+    }
 </style>
 <body>
 {% block content %}
 
 {% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src=" {% static 'js/main.js' %} "></script> 
 </body>
 </html>
