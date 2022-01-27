@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'nav.html' %}
+    <div id="container"><a href="" class="btn btn-primary col-sm">Go back</a></div>
+
+    <div id="container1">
+        <div class="d-flex justify-content-end"><p>{{story.author}}</p></div>
+        <div class="d-flex justify-content-center"><p>{{story.text}}</p></div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-4 row" style="text-align: center;justify-content: center;"><a href="#" class="btn btn-primary col-sm true_btn">True</a><p class="col-sm">{{story.t}}</p></div>
+            <div class="col-sm-4 row" style="text-align: center;justify-content: center;"><a href="#" class="btn btn-secondary col-sm false_btn">False</a><p class="col-sm">{{story.f}}</p></div>
+        </div>
+        </div>
+    
+{% endblock %}
