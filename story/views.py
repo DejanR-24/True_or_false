@@ -1,16 +1,17 @@
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import render,redirect,reverse
 from django.contrib.auth.models import User
-from django.views.generic import View,ListView,UpdateView,CreateView,DetailView,FormView,DeleteView
+from django.views.generic import View,ListView,UpdateView,DetailView,FormView,DeleteView
 from .models import Story,Comment
 from .forms import StoryForm,CommentForm
 from django.urls import reverse_lazy
 
 
-#class Home(View):
-#    def get(self,request):
- #       all_stories =  Story.objects.all() 
-  #      return render(request, 'story/stories.html',{'stories':all_stories})
+'''class Home(View):
+    def get(self,request):
+        all_stories =  Story.objects.all() 
+        return render(request, 'story/stories.html',{'stories':all_stories})
+'''
 
 class Home(ListView):
     model = Story
@@ -19,6 +20,16 @@ class Home(ListView):
     template_name = 'story/stories.html'
     ordering = '-id'
     paginate_by = '10'
+
+class MyStories(ListView):
+    model = Story
+    context_object_name = 'my_stories'
+    template_name = 'story/my_stories.html'
+    ordering = '-id'
+    paginate_by = '10'
+
+    def get_queryset(self):
+        return Story.objects.filter(author=self.request.user)
 
 
 class StoryDisplay(DetailView):
@@ -47,7 +58,7 @@ class StoryComment(FormView):
         return super(StoryComment,self).form_valid(form)
     
     def get_success_url(self):
-        return reverse('story_comments',kwarg={'pk':self.kwargs['pk']})
+        return reverse_lazy('story_comments',kwarg={'pk':self.kwargs['pk']})
 
 class StoryDetail(View):
     def get(self,request,*args, **kwargs):
@@ -62,41 +73,7 @@ class StoryDetail(View):
         )
         return view(request,*args, **kwargs)
 
-'''
-class StoryComment(ListView):
-    def get(self,request,story_ID):
-        story = Story.objects.get(id=story_ID)
-        comments = Comment.objects.filter(story_id=story_ID)
-        return render(request, 'story/comments.html',{'story':story,'comments':comments})
-    model = Comment
-    context_object_name = 'comments'
-    queryset = Comment.objects.filter(story_id=story_ID)
-    template_name = 'story/stories.html'
-    ordering = '-id'
-    paginate_by = '10'
-    
-    def post(self,request,story_ID):
-        form=CommentForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-        story = Story.objects.get(id=story_ID)
-        comments = Comment.objects.filter(story_id=story_ID)
-        return render(request, 'story/comments.html',{'story':story,'comments':comments,'form':form})
 
-class StoryComment(View):
-    def get(self,request,story_ID):
-        story = Story.objects.get(id=story_ID)
-        comments = Comment.objects.filter(story_id=story_ID)
-        return render(request, 'story/comments.html',{'story':story,'comments':comments})
-    
-    def post(self,request,story_ID):
-        form=CommentForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-        story = Story.objects.get(id=story_ID)
-        comments = Comment.objects.filter(story_id=story_ID)
-        return render(request, 'story/comments.html',{'story':story,'comments':comments,'form':form})
-'''
 class Dashboard(View):
     def get(self,request,*args, **kwargs):
         view = Home.as_view(
@@ -108,10 +85,24 @@ class StoryUpdate(UpdateView):
     model = Story
     fields = ('text','ans')
 
+    def get_success_url(self):
+        return reverse_lazy('my_stories')
+
 class StoryDelete(DeleteView):
     model = Story
     success_url = reverse_lazy('dashboard')
 
+class AddStory(FormView):
+    form_class = StoryForm
+    template_name = 'story/story_form.html'
+
+    def form_valid(self,form):
+        form.instance.author= self.request.user
+        form.save()
+        return super(AddStory,self).form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('my_stories')
 
 class AjaxHandlerView(View):
             def get(self,request):
@@ -120,33 +111,4 @@ class AjaxHandlerView(View):
                 print(text)
                 print()
                 return render(request, 'story/stories.html')
-
-def stories(request):
-    all_stories = Story.objects.all() #SELECT * FROM OBJAVE
-    return render(request, 'story/stories.html',{'stories':all_stories})
-
-def story_comments(request,story_ID):
-    comments = Comment.objects.filter(story_id=story_ID)   #story=story.objects.get(id=story_ID)) #SELECT * FROM KOMENTARI WHERE OBJAVE_ID=
-    story = Story.objects.get(id=story_ID)
-    form=CommentForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-    return render(request, 'story/comments.html',{'story':story,'comments':comments, 'form':form})
-
-def my_stories(request):
-    username = request.user.username
-    only_my_stories = Story.objects.filter(author=username) #SELECT * FROM OBJAVE WHERE USERNAME=User.username
-    return render(request, 'story/my_stories.html',{'my_stories': only_my_stories})
-
-def add_story(request):
-    if request.method == 'POST':
-        text= request.POST["text"]
-        ans= True if request.POST["ans"]=='on' else False
-        author = request.user
-        Story.objects.create(text = text, ans = ans, author = author).save()
-        return redirect('/my_stories')
-    else:
-        return render(request, 'story/add_story.html')
-
-
 

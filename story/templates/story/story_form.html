@@ -2,15 +2,16 @@
 {% block content %}
 {% include 'nav.html' %}
 <div id="container" style="background-color: black;">
-    <form action="/dashboard/" method="POST">
+    <form action="./" method="POST">
         {% csrf_token %}
         <div class="form-group">
             <label for="id_text">My story</label>
             <textarea name="text" class="form-control" id="id_text" rows="4" maxlength="2000" required=""></textarea>
           </div>
           <div class="form-check">
-        <input type='hidden' value='False' name='ans'>
-        <input type="checkbox" class="form-check-input" name="ans" id="id_ans">
+            <input type='hidden' value='{{ user.get_username}}' name='author' id="id_author">
+            <input type='hidden' value='False' name='ans'>
+            <input type="checkbox" class="form-check-input" name="ans" id="id_ans">
             <label class="form-check-label" for="id_ans">True?</label>
           </div>
           <div class="col-auto my-2">
