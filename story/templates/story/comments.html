@@ -1,16 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'nav.html' %}
-    <div id="container"><a href="/stories/" class="btn btn-primary col-sm">Go back</a></div>
+    <div id="container"><a href="/" class="btn btn-primary col-sm">Go back</a></div>
 
     <div id="container1">
         <div class="d-flex justify-content-end"><p>{{story.author}}</p></div>
         <div class="d-flex justify-content-center"><p>{{story.text}}</p></div>
         <div class="row d-flex justify-content-center">
-            <div class="col-sm-4 row" style="text-align: center;justify-content: center;"><a href="#" class="btn btn-primary col-sm true_btn">True</a><p class="col-sm">{{story.t}}</p></div>
-            <div class="col-sm-4 row" style="text-align: center;justify-content: center;"><a href="#" class="btn btn-secondary col-sm false_btn">False</a><p class="col-sm">{{story.f}}</p></div>
+            <div class="col-sm-4 row" style="text-align: center;justify-content: center;">
+              <div class="col-auto my-2">
+                <form action="{% url 'true_story' story.pk %}" method="POST">
+                      {% csrf_token %}
+                          <button type="submit" class="btn btn-primary"   name="true_story_id" value="{{ story.id }}">True</button>
+                </form>
+              </div> 
+              <!--   <a href="#" class="btn btn-primary col-sm true_btn">True</a>-->
+                <p class="col-sm">{{total_true}}</p>
+            </div>
+            <div class="col-sm-4 row" style="text-align: center;justify-content: center;">
+              <div class="col-auto my-2">
+                <form action="{% url 'false_story' story.pk %}" method="POST" class="col-auto">
+                    {% csrf_token %}
+                      <button type="submit" class="btn btn-primary" name="false_story_id" value="{{ story.id }}">False</button>
+                </form>
+              </div> 
+                <p class="col-sm">{{total_false}}</p>
+            </div>
         </div>
-        </div>
+    </div>
 
     {% for comment in comments %}
 
@@ -39,8 +56,6 @@
                 <textarea name="text" class="form-control" id="id_text" rows="4" maxlength="550" required=""></textarea>
               </div>
               <div class="col-sm">
-                <input type='hidden' value='{{ user.get_username}}' name='author' id="id_author">
-                <input type='hidden' value='{{ story.id }}' name='story' id="id_story_id">
                 <p class="col-sm" style="margin-left: 50%;">{{ user.get_username}}</p>
               </div>
               <div class="col-auto my-2">
