@@ -7,15 +7,18 @@ from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy,reverse
 
+
 from .models import Story,Comment
 from .forms import StoryForm,CommentForm
 
 
+@method_decorator(login_required,name='dispatch')
 class Home(ListView):
     model = Story
     context_object_name = 'stories'
     queryset = Story.objects.all()
     template_name = 'story/stories.html'
+    ordering = 'id'
     paginate_by = '10'
 
 @method_decorator(login_required,name='dispatch')
