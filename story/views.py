@@ -11,13 +11,6 @@ from .models import Story,Comment
 from .forms import StoryForm,CommentForm
 
 
-
-'''class Home(View):
-    def get(self,request):
-        all_stories =  Story.objects.all() 
-        return render(request, 'story/stories.html',{'stories':all_stories})
-'''
-
 class Home(ListView):
     model = Story
     context_object_name = 'stories'
@@ -59,7 +52,7 @@ class StoryDisplay(DetailView):
 @method_decorator(login_required,name='dispatch')
 class StoryComment(FormView):
     form_class = CommentForm
-    template_name = 'story/comments.html'
+    template_name = 'story/story_detail.html'
 
     def form_valid(self,form):
         form.instance.author= self.request.user
@@ -68,19 +61,19 @@ class StoryComment(FormView):
         form.save()
         return super(StoryComment,self).form_valid(form)
     
-    def get_success_url(self):
-        return reverse_lazy('story_comments',kwarg={'pk':self.kwargs['pk']})
+    def get_success_url(self): 
+        return reverse('story_detail',kwarg={'pk':self.kwargs['pk']})
 
 class StoryDetail(View):
-    def get(self,request,*args, **kwargs):
+    def get(self,request,*args, **kwargs):  
         view = StoryDisplay.as_view(
-            template_name = 'story/comments.html'
+            template_name = 'story/story_detail.html'
         )
         return view(request,*args, **kwargs)
 
     def post(self,request,*args, **kwargs):
         view = StoryComment.as_view(
-            template_name = 'story/comments.html'
+            template_name = 'story/story_detail.html'
         )
         return view(request,*args, **kwargs)
 
@@ -103,7 +96,8 @@ class StoryUpdate(UpdateView):
 class StoryDelete(DeleteView):
     model = Story
     success_url = reverse_lazy('dashboard')
-
+    
+@method_decorator(login_required,name='dispatch')
 class AddStory(FormView):
     form_class = StoryForm
     template_name = 'story/story_form.html'
@@ -116,20 +110,12 @@ class AddStory(FormView):
     def get_success_url(self):
         return reverse_lazy('my_stories')
 
-class AjaxHandlerView(View):
-            def get(self,request):
-                text = request.GET.get("true_button")
-                print()
-                print(text)
-                print()
-                return render(request, 'story/stories.html')
-
 def true_story(request,pk):
     story = get_object_or_404(Story, id=request.POST.get('true_story_id'))
     story.t.add(request.user)
-    return HttpResponseRedirect(reverse_lazy('story_detail', args=[str(pk)]))
+    return HttpResponseRedirect(reverse('story_detail', args=[str(pk)]))
 
 def false_story(request,pk):
     story = get_object_or_404(Story, id=request.POST.get('false_story_id'))
     story.f.add(request.user)
-    return HttpResponseRedirect(reverse_lazy('story_detail', args=[str(pk)]))
+    return HttpResponseRedirect(reverse('story_detail', args=[str(pk)]))
