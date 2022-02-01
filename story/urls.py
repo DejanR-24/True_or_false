@@ -19,5 +19,6 @@ urlpatterns=[
     path('true/<int:pk>/',views.true_story,name='true_story'),
     path('false/<int:pk>/',views.false_story,name='false_story'),
 
+    
 
 ]   

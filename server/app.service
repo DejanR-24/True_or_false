@@ -1,0 +1,15 @@
+[Unit]
+Description=uWSGI instance to serve True_or_false project
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/home/dejan/Documents/programiranje/True_or_false/nikolakblog
+Environment="PATH=/home/dejan/Documents/programiranje/True_or_false/.venv/bin"
+ExecStart=/home/dejan/Documents/programiranje/True_or_false/.venv/bin/uwsgi --ini /home/dejan/Documents/programiranje/True_or_false/.venv/etc/uwsgi.ini
+KillSignal=SIGQUIT
+Type=notify
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
