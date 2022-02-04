@@ -1,0 +1,9 @@
+sudo systemctl daemon-reload
+
+sudo systemctl start trueorfalse.service
+
+sudo systemctl status trueorfalse.service
+
+sudo systemctl enable trueorfalse.service
+
+sudo systemctl disable trueorfalse.service
