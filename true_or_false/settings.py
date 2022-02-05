@@ -85,13 +85,13 @@ DATABASES = {
         'NAME': 'mydb',
         'USER': 'mydb_admin',
         'PASSWORD': 'EmzZ2DfvhFitsiZ17WjEKONtTloAMkuB7QAPrfoXpVvxvDBfTX',
-        'HOST': '127.0.0.1',
+        'HOST': '172.31.18.190',
         'PORT': '5432',
     }
 }
 
 INTERNAL_IPS = [
-    "127.0.0.1",
+    "172.31.18.190",
 ]
 
 
