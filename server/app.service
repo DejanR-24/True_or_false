@@ -1,5 +1,5 @@
 [Unit]
-Description=uWSGI instance to serve True_or_false project
+Description=uWSGI instance to serve trueorfalse.tk project
 After=network.target
 
 [Service]
@@ -13,4 +13,3 @@ NotifyAccess=all
 
 [Install]
 WantedBy=multi-user.target
-
