@@ -25,5 +25,5 @@ Once pip has finished downloading the dependencies migrate db and load data in i
 (env)$python3.9 manage.py loaddata db.json
 (env)$ python3.9 manage.py runserver
 
-login for admin is: dejan
+login for admin is: dejan 
 password:1234
