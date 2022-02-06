@@ -34,3 +34,6 @@ Once pip has finished downloading the dependencies migrate db and load data in i
 login for admin is: dejan 
 password:1234
 ```
+
+##Or you can just go to them site
+[True or false](trueorfalse.tk)
