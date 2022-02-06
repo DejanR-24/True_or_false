@@ -35,5 +35,5 @@ login for admin is: dejan
 password:1234
 ```
 
-## Or you can just go to them site
+#### Or you can just go to the site
 [True or false](https://trueorfalse.tk)
