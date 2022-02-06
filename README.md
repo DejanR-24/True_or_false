@@ -1,9 +1,9 @@
-#True_or_false
+# True_or_false
 
 This is an entertainment web app where author posts short story and the hidden answer to is it true story or false,
 other users try to guess, after some time the author's answer is revealed and users get the points or not.
 
-##Well it's far from done but it has functionalities- login,logout,posting stories, voting -true or false 
+## Well it's far from done but it has functionalities- login,logout,posting stories, voting -true or false 
 
 Setup:
 
@@ -35,5 +35,5 @@ login for admin is: dejan
 password:1234
 ```
 
-##Or you can just go to them site
-[True or false](trueorfalse.tk)
+## Or you can just go to them site
+[True or false](https://trueorfalse.tk)
