@@ -21,8 +21,9 @@ $ source .venv/bin/activate
 Then install the dependencies:
 ```
 (env)$ pip3 install -r requirements.txt
-Note the (env) in front of the prompt. This indicates that this terminal session operates in a virtual environment set up by venv
 ```
+Note the (env) in front of the prompt. This indicates that this terminal session operates in a virtual environment set up by venv
+
 Once pip has finished downloading the dependencies migrate db and load data in it:
 ```
 (env)$python3.9 manage.py migrate
