@@ -1,22 +1,38 @@
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
-    <a class="navbar-brand" href="#">True or False</a>
+    <a class="navbar-brand" href="">True or False</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="/stories">All stories</a>
+          <a class="nav-link" href="{% url 'home' %}">All stories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/my_stories/">My stories</a>
+          <a class="nav-link" href="{% url 'my_stories' %}">My stories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/add_story/">Share your story</a>
+          <a class="nav-link" href="{% url 'add_story' %}">Share your story</a>
         </li>
+        {% if user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="btn btn-primary col-sm">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="{% url 'login' %}" class="btn btn-primary col-sm">Login</a>
+        </li>
+        {% endif %}
 <!--        <li class="nav-item">
           <a class="nav-link disabled" href="#">Disabled</a>
         </li> -->
       </ul>
+      
     </div>
   </nav>

@@ -1,0 +1,15 @@
+[Unit]
+Description=uWSGI instance to serve trueorfalse.tk project
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/var/www/trueorfalse.tk/true_or_false
+Environment="PATH=/var/www/trueorfalse.tk/.venv/bin"
+ExecStart=/var/www/trueorfalse.tk/.venv/bin/uwsgi --ini /var/www/trueorfalse.tk/.venv/etc/uwsgi.ini
+KillSignal=SIGQUIT
+Type=notify
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target

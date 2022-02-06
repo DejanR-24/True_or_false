@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'nav.html' %}
+<div id="container" style="background-color: black;">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div class="d-flex justify-content-center"><p>Are you sure?</p></div>    
+    <div class="col-auto my-2">
+      <button type="submit" class="btn btn-secondary" style="margin-left: 94%;" value="yes">Yes!</button>
+    </div>     
+  </form>
+</div>
+{% endblock %}

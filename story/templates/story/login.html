@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'nav.html' %}
+
+<div class="container" style="color: white;">
+    <div class="form login-form d-flex justify-content-center">
+        <form action="" method="POST" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p><input type="submit" value="Login"></p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
